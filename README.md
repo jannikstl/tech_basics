@@ -1,2 +1,2 @@
 # tech basics 
-# deine ma
+# deine ma is cool
