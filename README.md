@@ -1,1 +1,1 @@
-# tech_basics
+# tech basics
