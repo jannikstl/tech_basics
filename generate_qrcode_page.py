@@ -1,19 +1,42 @@
+import os
 import streamlit as st
 import segno
 import time
 
-def generate_qrcode():
+# definition that creates the qr code
+
+def generate_qrcode(url, dark_colour):
+    # if directory does not exist it creates the folder
+    directory_path = 'images'
+    os.makedirs(directory_path, exist_ok=True)
+
+    qrcode = segno.make_qr(url)
+    qrcode.to_pil(scale=10,
+                  dark=dark_colour).save("images/qrcode_streamlit.png")
+
+
+def generate_qrcode_page():
+    # place an image
+    # you can either download an image, or include the image file path
+
+    st.image("images/waves.jpg")
+
+    # place a title
+    st.title("THE QR CODE GENERATOR")
+
+    # place a text input box
     url = st.text_input("Enter the URL you want to encode:")
 
-    def generate_qrcode(url):
-        qrcode = segno.make_qr(url)
-        qrcode.save("images/qrcode_streamlit.png",
-                    scale=5)
+    # use a colour picker
+    dark_colour = st.color_picker("Pick a Colour for the dark squares", "#8569a8")
 
-    if url:
+    button = st.button("Click here to generate")
+
+
+    if button and url:
+       # with a spinner
         with st.spinner("Generate QR Code"):
-            time.sleep(3)
-        generate_qrcode(url)
-        st.image("images/qrcode_streamlit.png")
-
-    st.markdown("Made by Jannik Stahl")
+            time.sleep(1.5)
+        generate_qrcode(url, dark_colour)
+        st.image("images/qrcode_streamlit.png",
+                 caption="My Generated QR Code")
